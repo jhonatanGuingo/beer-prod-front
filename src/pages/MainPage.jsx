@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios"
 import { Link } from "react-router-dom";
-import Header from "../components/headerComponent";
+import Header from "../components/HeaderMain";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 

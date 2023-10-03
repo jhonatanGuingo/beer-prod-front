@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
-import Header from "../components/headerComponent";
+import Header from "../components/HeaderMain";
 import { Link } from "react-router-dom";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
