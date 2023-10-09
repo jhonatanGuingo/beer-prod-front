@@ -1,32 +1,31 @@
 import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
-import Breweries from "../components/Breweries";
-import Guests from "../components/Guests";
+import Recipes from "../components/Recipes";
 
-export default function BeersPage() {
+export default function RecipesPage() {
   return (
     <>
       <HeaderLogged />
       <ContainerMain>
         <SideBar>
-          <button>Criar Cervejaria</button>
-          <button>Editar Cervejaria</button>
-          <button>Convidar Usuário</button>
-          <button>Alterar Permissões</button>
+          <BrewerieSideBar>
+            <h1>Cervejaria</h1>
+            <h1>São Bartolomeu</h1>
+          </BrewerieSideBar>
+          <button>Criar Receita</button>
+          <button>Editar Receita</button>
+          <button>Excluir Receita</button>
         </SideBar>
-        <ContainerBeers>
-          <h1>Suas Cervejarias:</h1>
-          <BreweriesContainer>
-            <Breweries />
-            <Breweries />
-            <Breweries />
-            <Breweries />
-          </BreweriesContainer>
-          <h1>Convites:</h1>
-          <BreweriesContainer>
-            <Guests />
-          </BreweriesContainer>
-        </ContainerBeers>
+        <ContainerRecipes>
+          <h1>Receitas</h1>
+          <RecipesCardContainer>
+            <Recipes />
+            <Recipes />
+            <Recipes />
+            <Recipes />
+            <Recipes />
+          </RecipesCardContainer>
+        </ContainerRecipes>
       </ContainerMain>
     </>
   );
@@ -34,13 +33,31 @@ export default function BeersPage() {
 const ContainerMain = styled.div`
   display: flex;
 `;
-const BreweriesContainer = styled.div`
+const BrewerieSideBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  background-color: #214405 ;
+  h1 {
+
+    color: #fff;
+    font-family: Roboto;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+`;
+const RecipesCardContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
 `;
-const ContainerBeers = styled.div`
+const ContainerRecipes = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
