@@ -9,7 +9,7 @@ export default function HeaderLogged() {
       <SHeader>
         <button onClick={() => {navigate('/beers')}}>Cervejarias</button>
         <button onClick={() => {navigate('/recipes')}}>Receitas</button>
-        <button>Produções</button>
+        <button onClick={() => {navigate('/productions')}}>Produções</button>
         <button>Sair</button>
       </SHeader>
     </>

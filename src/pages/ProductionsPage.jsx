@@ -1,39 +1,31 @@
 import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
-import Breweries from "../components/Breweries";
-import Guests from "../components/Guests";
-import { useState } from "react";
-import BreweriesModal from "../components/BreweriesModal";
+import Productions from "../components/Productions";
 
-export default function BeersPage() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function ProductionsPage() {
   return (
     <>
       <HeaderLogged />
       <ContainerMain>
         <SideBar>
-          <button onClick={handleOpen}>Criar Cervejaria</button>
-          <button>Editar Cervejaria</button>
-          <button>Convidar Usuário</button>
-          <button>Alterar Permissões</button>
+          <ProductionSideBar>
+            <h1>Cervejaria</h1>
+            <h1>São Bartolomeu</h1>
+          </ProductionSideBar>
+          <button>Começar produção</button>
+          <button>Concluir produção</button>
+          <button>Excluir produção</button>
         </SideBar>
-        
-        <ContainerBeers>
-        <BreweriesModal isOpen = {open} onClose={handleClose}/>
-          <h1>Suas Cervejarias:</h1>
-          <BreweriesContainer>
-            <Breweries />
-            <Breweries />
-            <Breweries />
-            <Breweries />
-          </BreweriesContainer>
-          <h1>Convites:</h1>
-          <BreweriesContainer>
-            <Guests />
-          </BreweriesContainer>
-        </ContainerBeers>
+        <ContainerProduction>
+          <h1>Produções:</h1>
+          <ProductionCardContainer>
+            <Productions />
+            <Productions />
+            <Productions />
+            <Productions />
+            <Productions />
+          </ProductionCardContainer>
+        </ContainerProduction>
       </ContainerMain>
     </>
   );
@@ -41,13 +33,31 @@ export default function BeersPage() {
 const ContainerMain = styled.div`
   display: flex;
 `;
-const BreweriesContainer = styled.div`
+const ProductionSideBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  background-color: #214405 ;
+  h1 {
+
+    color: #fff;
+    font-family: Roboto;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+`;
+const ProductionCardContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
 `;
-const ContainerBeers = styled.div`
+const ContainerProduction = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
