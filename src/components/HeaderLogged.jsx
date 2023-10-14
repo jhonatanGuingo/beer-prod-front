@@ -1,11 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function HeaderLogged() {
+  const navigate = useNavigate();
+
   return (
     <>
       <SHeader>
-        <button>Cervejarias</button>
-        <button>Receitas</button>
+        <button onClick={() => {navigate('/beers')}}>Cervejarias</button>
+        <button onClick={() => {navigate('/recipes')}}>Receitas</button>
         <button>Produções</button>
         <button>Sair</button>
       </SHeader>
