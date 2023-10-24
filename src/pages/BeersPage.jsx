@@ -3,12 +3,17 @@ import HeaderLogged from "../components/HeaderLogged";
 import Breweries from "../components/Breweries";
 import Guests from "../components/Guests";
 import { useState } from "react";
-import BreweriesModal from "../components/BreweriesModal";
+import NewBreweriesModal from "../components/Modals/BreweriesModal/NewBreweriesModal";
+import InviteUserModal from "../components/Modals/BreweriesModal/InviteUserModal";
 
 export default function BeersPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [openInvite, setOpenInvite] = useState(false);
+  const handleOpenInvite = () => setOpenInvite(true);
+  const handleCloseInvite = () => setOpenInvite(false);
   return (
     <>
       <HeaderLogged />
@@ -16,12 +21,13 @@ export default function BeersPage() {
         <SideBar>
           <button onClick={handleOpen}>Criar Cervejaria</button>
           <button>Editar Cervejaria</button>
-          <button>Convidar Usuário</button>
+          <button onClick={handleOpenInvite}>Convidar Usuário</button>
           <button>Alterar Permissões</button>
         </SideBar>
         
         <ContainerBeers>
-        <BreweriesModal isOpen = {open} onClose={handleClose}/>
+        <NewBreweriesModal isOpen = {open} onClose={handleClose}/>
+        <InviteUserModal isOpenInvite = {openInvite} onCloseInvite={handleCloseInvite}/>
           <h1>Suas Cervejarias:</h1>
           <BreweriesContainer>
             <Breweries />

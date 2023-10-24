@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
 import Recipes from "../components/Recipes";
+import { useState } from "react";
+import NewRecipeModal from "../components/Modals/RecipesModal/NewRecipeModal";
 
 export default function RecipesPage() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <>
       <HeaderLogged />
@@ -12,11 +17,12 @@ export default function RecipesPage() {
             <h1>Cervejaria</h1>
             <h1>São Bartolomeu</h1>
           </BrewerieSideBar>
-          <button>Criar Receita</button>
+          <button onClick={handleOpen} >Criar Receita</button>
           <button>Editar Receita</button>
           <button>Excluir Receita</button>
         </SideBar>
         <ContainerRecipes>
+          <NewRecipeModal isOpen = {open} onClose={handleClose}/>
           <h1>Receitas</h1>
           <RecipesCardContainer>
             <Recipes />

@@ -1,21 +1,35 @@
 import styled from "styled-components";
 
-export default function BreweriesModal({isOpen, onClose}) {
+export default function NewRecipeModal({isOpen, onClose}) {
   if(!isOpen) return null;
   return (
-  
+    <BackgroundModal>
       <ContainerModal>
-        <h1>Criar Cervejaria</h1>
+        <h1>IPA</h1>
+        <h2>Etapas:</h2>
+        <button className='close' onClick={() => onClose()}>X</button>
         <form>
-          <input placeholder="Nome da cervejaria" required type="text" />
-          <input placeholder="Email" required type="text" />
-          <button type="submit">Criar</button>
+          <input placeholder="Etapa 1" required type="text" />
+          <input placeholder="Etapa 2" required type="text" />
+          <input placeholder="Etapa 3" required type="text" />
+          <input placeholder="Etapa 4" required type="text" />
+          <input placeholder="Etapa 5" required type="text" />
+          <button className="submit" type="submit">Começar nova produção</button>
         </form>
       </ContainerModal>
+      </BackgroundModal>
   
   );
 }
-
+const BackgroundModal = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(0,0,0,0.7);
+  z-index: 1000;
+`
 const ContainerModal = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,15 +37,16 @@ const ContainerModal = styled.div`
   justify-content: center;
   position: absolute;
   width: 450px;
-  height: 480px;
+  
   background-color: #D9D9D9;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400;
- border-radius: 17px;
+  border-radius: 17px;
   z-index: 5;
+padding: 20px;
   input {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     font-size: 20px;
@@ -46,6 +61,12 @@ const ContainerModal = styled.div`
       margin: 0px;
     }
   }
+  .close{
+    position: fixed;
+    top:20px;
+    right: 20px
+    
+  }
   form {
     display: flex;
     flex-direction: column;
@@ -55,7 +76,7 @@ const ContainerModal = styled.div`
     width: 100%;
     border-radius: 5px;
   }
-  button {
+  .submit {
     font-family: Bebas Neue;
     outline: none;
     border: none;
@@ -63,7 +84,7 @@ const ContainerModal = styled.div`
     border-radius: 5px;
     background-color: #214405;
     font-size: 25px;
-
+    margin-bottom: 30px;
     color: white;
     cursor: pointer;
 
