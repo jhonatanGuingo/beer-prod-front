@@ -1,15 +1,49 @@
+import axios from "axios";
+import { useState } from "react";
 import styled from "styled-components";
 
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
+
 export default function NewBreweriesModal({isOpen, onClose}) {
+  const [nameBrewerie, setNameBrewerie] = useState('');
+  const [emailOwner, setEmailOwner] = useState('');
   if(!isOpen) return null;
+  function NewBrewerie(e){
+
+    e.preventDefault();
+    const body = {
+      email: emailOwner,
+      name: nameBrewerie
+    }
+      const promise = axios.post("/brewery",body)
+   promise.then((res) => {
+          alert("Cervejaria Criada com Sucesso");
+          
+        });
+    
+        promise.catch((err) => {
+          alert("error ao criar cervejeria");
+          console.log(err.response.data, "criar cervejaria")
+        });
+  }
   return (
     <BackgroundModal>
       <ContainerModal>
         <h1>Criar Cervejaria</h1>
         <button className='close' onClick={() => onClose()}>X</button>
-        <form>
-          <input placeholder="Nome da cervejaria" required type="text" />
-          <input placeholder="Email" required type="text" />
+        <form onSubmit={NewBrewerie}>
+          <input 
+          placeholder="Nome da cervejaria" 
+          required 
+          type="text"
+          value={nameBrewerie}
+          onChange={(e) => setNameBrewerie(e.target.value)} />
+          <input 
+          placeholder="Email" 
+          required 
+          type="text"
+          value={emailOwner}
+          onChange={(e) => setEmailOwner(e.target.value)}  />
           <button className="submit" type="submit">Criar</button>
         </form>
       </ContainerModal>
