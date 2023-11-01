@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+import useToken from "../../../hooks/useToken";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function NewBreweriesModal({isOpen, onClose}) {
   const [nameBrewerie, setNameBrewerie] = useState('');
   const [emailOwner, setEmailOwner] = useState('');
+  const {token} = useToken();
   if(!isOpen) return null;
   function NewBrewerie(e){
 
@@ -15,7 +17,12 @@ export default function NewBreweriesModal({isOpen, onClose}) {
       email: emailOwner,
       name: nameBrewerie
     }
-      const promise = axios.post("/brewery",body)
+      const promise = axios.post("/brewery",body, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      
    promise.then((res) => {
           alert("Cervejaria Criada com Sucesso");
           

@@ -23,6 +23,10 @@ export default function NewRecipeModal({isOpen, onClose}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const body = {
+      
+    }
   };
 
   return (

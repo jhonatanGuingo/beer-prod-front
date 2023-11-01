@@ -3,7 +3,8 @@ import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import Header from "../components/HeaderMain";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
@@ -13,6 +14,7 @@ export default function SignUpPage(){
     const [pass, setPass] = useState("");
     const [load, setLoad] = useState(false);
     const [confirmPass, setConfirmPass] = useState("");
+    const navigate = useNavigate();
 
     function signUp(e) {
         e.preventDefault();
@@ -24,19 +26,20 @@ export default function SignUpPage(){
           return;
         }
     
-        const promise = axios.post("/signUp", {
+        const promise = axios.post("/users", {
           name: name,
           email: email,
           password: pass,
         });
     
         promise.then((res) => {
-          alert("Conta criada com sucesso");
+          toast("Conta criada com sucesso");
           setLoad(false);
+          navigate('/')
         });
     
         promise.catch((err) => {
-          alert(err.response.data);
+          toast("Não foi possível criar a conta, verifique os dados");
           setLoad(false);
         });
       }

@@ -2,9 +2,10 @@ import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
 import Breweries from "../components/Breweries";
 import Guests from "../components/Guests";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import NewBreweriesModal from "../components/Modals/BreweriesModal/NewBreweriesModal";
 import InviteUserModal from "../components/Modals/BreweriesModal/InviteUserModal";
+import UserContext from "../contexts/UserContext";
 
 export default function BeersPage() {
   const [open, setOpen] = useState(false);
@@ -14,6 +15,9 @@ export default function BeersPage() {
   const [openInvite, setOpenInvite] = useState(false);
   const handleOpenInvite = () => setOpenInvite(true);
   const handleCloseInvite = () => setOpenInvite(false);
+
+  const {userData} = useContext(UserContext)
+  console.log(userData, 'usuario')
   return (
     <>
       <HeaderLogged />

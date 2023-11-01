@@ -1,35 +1,37 @@
-import { useState } from "react";
-
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import axios from "axios"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/HeaderMain";
+import { toast } from "react-toastify";
+import UserContext from "../contexts/UserContext";
+
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function MainPage() {
-  
-   
     const [emailLogin, setEmailLogin] = useState("");
     const [passLogin, setPassLogin] = useState("");
-    
+    const {setUserData} = useContext(UserContext);
+    const navigate = useNavigate();
 
     function signIn(e) {
         e.preventDefault();
-        const promise = axios.post("/signIn", {
+        const promise = axios.post("/auth/login", {
           email: emailLogin,
           password: passLogin,
         });
     
         promise.then((res) => {
-          const { userId, name, token } = res.data;
-          setUser({ userId, name, token });
-          localStorage.setItem("user", JSON.stringify({ userId, name, token }));
-          navigate("/")
+          const { email, token } = res.data;
+          setUserData({ email, token });
+          console.log(res.data)
+          toast('Login realizado com sucesso!');
+          navigate("/beers")
         });
     
         promise.catch((err) => {
-          console.log(err.response.data);
+          toast('Não foi possível fazer o login!');
         });
       }
     

@@ -4,13 +4,18 @@ import styled from "styled-components";
 export default function HeaderLogged() {
   const navigate = useNavigate();
 
+  function handleLogout() {
+    localStorage.clear();
+    navigate('/');
+}
+
   return (
     <>
       <SHeader>
         <button onClick={() => {navigate('/beers')}}>Cervejarias</button>
         <button onClick={() => {navigate('/recipes')}}>Receitas</button>
         <button onClick={() => {navigate('/productions')}}>Produções</button>
-        <button>Sair</button>
+        <button onClick={handleLogout}>Sair</button>
       </SHeader>
     </>
   );
