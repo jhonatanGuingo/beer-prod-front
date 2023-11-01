@@ -1,8 +1,26 @@
-# React + Vite
+## How to run for development
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Clone this repository
+2. Install all dependencies
 
-Currently, two official plugins are available:
+```bash
+bun i
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Populate `.env` file based on `.env.example`. `VITE_API_URL` should point to your API server (beer-production-API)
+
+4. Run the back-end in a development environment:
+
+```bash
+ go run cmd/main.go
+```
+## Building and starting for production
+
+```bash
+bun run dev
+```
+
+## What to do when add new ENV VARIABLES
+
+- Add them to `.env.example` file
+- Add them to your local `.env` file
