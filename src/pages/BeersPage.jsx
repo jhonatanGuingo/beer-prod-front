@@ -2,22 +2,45 @@ import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
 import Breweries from "../components/Breweries";
 import Guests from "../components/Guests";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NewBreweriesModal from "../components/Modals/BreweriesModal/NewBreweriesModal";
 import InviteUserModal from "../components/Modals/BreweriesModal/InviteUserModal";
 import UserContext from "../contexts/UserContext";
+import UserBreweries from "../contexts/UserBreweries";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function BeersPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+ 
+  const navigate = useNavigate();
   const [openInvite, setOpenInvite] = useState(false);
   const handleOpenInvite = () => setOpenInvite(true);
   const handleCloseInvite = () => setOpenInvite(false);
 
+  const {breweries, setBreweries} = useContext(UserBreweries);
   const {userData} = useContext(UserContext)
-  console.log(userData, 'usuario')
+  const token = userData.token;
+
+  useEffect(() => {
+    
+      const promise = axios.get("/brewery", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      promise.then((res) => {
+       
+        setBreweries(res.data)
+       
+      });
+      promise.catch((err) => {
+        
+      });
+    
+  },[breweries])
   return (
     <>
       <HeaderLogged />
@@ -30,14 +53,12 @@ export default function BeersPage() {
         </SideBar>
         
         <ContainerBeers>
-        <NewBreweriesModal isOpen = {open} onClose={handleClose}/>
+        <NewBreweriesModal isOpen = {open} setOpen = {setOpen} onClose={handleClose}/>
         <InviteUserModal isOpenInvite = {openInvite} onCloseInvite={handleCloseInvite}/>
           <h1>Suas Cervejarias:</h1>
           <BreweriesContainer>
-            <Breweries />
-            <Breweries />
-            <Breweries />
-            <Breweries />
+            {breweries.map(brewery => (<Breweries key={brewery.id} brewery = {brewery} />))}
+            
           </BreweriesContainer>
           <h1>Convites:</h1>
           <BreweriesContainer>
