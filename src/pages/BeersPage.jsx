@@ -10,6 +10,8 @@ import UserBreweries from "../contexts/UserBreweries";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
+
 export default function BeersPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
