@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-export default function Breweries() {
+export default function Breweries(brewery) {
+
+  
   return (
     <>
       <BreweriesCard>
-        <h1>São Bartolomeu</h1>
-        <h3>Função: Administrador</h3>
-        <h3>Produções ativas: 3</h3>
+        <h1>{brewery.brewery.name}</h1>
+        <h3>Função: {brewery.brewery.role}</h3>
+        
       </BreweriesCard>
     </>
   );

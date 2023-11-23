@@ -1,13 +1,21 @@
+import axios from "axios";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UserContext from "../contexts/UserContext";
+import UserBreweries from "../contexts/UserBreweries";
 
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 export default function HeaderLogged() {
   const navigate = useNavigate();
-
+  const {userData} = useContext(UserContext);
+  const {breweries, setBreweries} = useContext(UserBreweries);
+  const token = userData.token;
   function handleLogout() {
     localStorage.clear();
-    navigate('/');
+    
 }
+
 
   return (
     <>

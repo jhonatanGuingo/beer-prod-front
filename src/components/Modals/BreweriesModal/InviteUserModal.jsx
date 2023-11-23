@@ -1,28 +1,65 @@
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import UserBreweries from "../../../contexts/UserBreweries";
+import axios from "axios";
+import UserContext from "../../../contexts/UserContext";
+
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function InviteUserModal({isOpenInvite, onCloseInvite}) {
+  const {breweries} = useContext(UserBreweries);
+  const [valueSelect, setValueSelect] = useState("");
+  const [email, setEmail] = useState("");
+  const [func, setFunc] = useState("");
+  const {userData} = useContext(UserContext)
+  const token = userData.token;
+
   if(!isOpenInvite) return null;
+  
+
+  function inviteUser(e) {
+    e.preventDefault();
+    const body = {
+      brewery_name: valueSelect,
+      invited_user_email: email,
+      role: func
+    }
+
+    console.log(body)
+    const promise = axios.post("/brewery/invite", body, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    promise.then((res) => {
+      alert("Usuario convidado com sucesso")
+    })
+    promise.catch((err) => {
+      console.log(err.message)
+    })
+  }
   return (
     <BackgroundModal>
       <ContainerModal>
         <h1>Convidar Usuário</h1>
         <button className='close' onClick={() => onCloseInvite()}>X</button>
-        <form>
+        <form onSubmit={inviteUser}>
             <h2>Escolher Cervejaria</h2>
-        <select name="Cervejaria">
-            <option value="valor1">São Barto</option>
-            <option value="valor2" >Valor 2</option>
-            <option value="valor3">Valor 3</option>
+        <select name="Cervejaria" value = {valueSelect} onChange={(e) => setValueSelect(e.target.value)}>
+          {breweries.map((brewery) => (<option key = {brewery.id} value ={brewery.name}>
+              {brewery.name}
+            </option>))}
             </select>
             <h2>E-mail</h2>
-          <input placeholder="Email do convidado" required type="text" />
+          <input placeholder="Email do convidado" required type="text" value = {email} onChange={(e) => setEmail(e.target.value)} />
           <h2>Escolher Função</h2>
-          <select name="select">
-            <option value="valor1">Cervejeiro</option>
-            <option value="valor2">Administrador</option>
-            <option value="valor3">Soviet</option>
+          <select name="select" value = {func} onChange={(e) => setFunc(e.target.value)}>
+            <option value="cervejeiro">Cervejeiro</option>
+            <option value="administrador">Administrador</option>
+            <option value="soviet">Soviet</option>
             </select>
-          <button className="submit" type="submit">Convidar</button>
+          <button className="submit" type="submit" >Convidar</button>
         </form>
       </ContainerModal>
       </BackgroundModal>
@@ -122,4 +159,4 @@ const ContainerModal = styled.div`
 
     padding: 12px;
   }
-`;
+`
