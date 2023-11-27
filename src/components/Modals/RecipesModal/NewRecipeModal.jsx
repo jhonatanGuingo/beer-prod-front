@@ -1,12 +1,20 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import UserContext from "../../../contexts/UserContext";
+
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function NewRecipeModal({isOpen, onClose}) {
-  if(!isOpen) return null;
-  const [steps, setSteps] = useState(['', '', '']); // Inicialmente, três campos de etapas
 
+  if(!isOpen) return null;
+  const {userData} = useContext(UserContext)
+  const token = userData.token;
+  const [steps, setSteps] = useState([{ instruction: '',  name: '' }]); // Inicialmente, três campos de etapas
+  const [nameRecipe, setNameRecipe] = useState('');
+  
   const addStep = () => {
-    setSteps([...steps, '']);
+    setSteps([...steps, { name: '', instruction: '' }]);
   };
 
   const removeStep = (index) => {
@@ -15,39 +23,63 @@ export default function NewRecipeModal({isOpen, onClose}) {
     setSteps(newSteps);
   };
 
-  const handleStepChange = (index, text) => {
+  const handleStepNameChange = (index, e) => {
     const newSteps = [...steps];
-    newSteps[index] = text;
+    newSteps[index].name = e.target.value;
     setSteps(newSteps);
   };
 
-  const handleSubmit = (e) => {
+  const handleStepDescriptionChange = (index, e) => {
+    const newSteps = [...steps];
+    newSteps[index].instruction = e.target.value;
+    setSteps(newSteps);
+  };
+ 
+  
+  function handleSubmit(e){
     e.preventDefault();
 
     const body = {
-      
+      brewery_id: "2cdc9830-2bd3-4eb7-b4d9-fe36c79900fc",
+      name: nameRecipe,
+      steps
     }
+
+    const promise= axios.post("/recipes", body, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    promise.then(res => {
+      console.log(res.data)
+    })
+
+    promise.catch((err) => {
+        
+    });
   };
 
   return (
     <BackgroundModal>
       <ContainerModal>
-        <h1>IPA</h1>
-        <h2>Etapas</h2>
+        
         <button className='close' onClick={() => onClose()}>X</button>
         <form onSubmit={handleSubmit}>
-      
+        <input className="nome" type="text" placeholder="Nome da receita" value={nameRecipe} onChange={(e) => setNameRecipe(e.target.value)} />
+        <h2>Etapas</h2>
       {steps.map((step, index) => (
         <div key={index}>
-          <input
+          <input className="etapa"
             type="text"
-            value={step}
+            value={step.name}
             placeholder= {"Etapa " + (index + 1)}
-            onChange={(e) => handleStepChange(index, e.target.value)}
+            onChange={(e) => handleStepNameChange(index, e)}
           />
           <button className="removeStep" type="button" onClick={() => removeStep(index)}>
             -
           </button>
+          <textarea value={step.instruction} onChange={(e) => handleStepDescriptionChange(index,e)} placeholder="Instruções"></textarea>
         </div>
       ))}
       <button className="addStep" type="button" onClick={addStep}>
@@ -60,6 +92,7 @@ export default function NewRecipeModal({isOpen, onClose}) {
   
   );
 }
+
 const BackgroundModal = styled.div`
   position: fixed;
   top: 0;
@@ -90,15 +123,48 @@ h2{
   font-size: 20px;
   margin-bottom: 10px;
 }
-  input {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    font-size: 20px;
+textarea {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-size: 15px;
     width: calc(100% - 25%);
     border-radius: 5px;
     outline: none;
     border: 1px solid #ccc;
     padding: 15px;
     margin: 1px;
+
+    :focus {
+      border: 2px solid #ffb6b6;
+      margin: 0px;
+    }
+}
+.nome {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-size: 15px;
+    height: 8px;
+    width: calc(100% - 50%);
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 1px;
+
+    :focus {
+      border: 2px solid #ffb6b6;
+      margin: 0px;
+    }
+  }
+  .etapa {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-size: 15px;
+    height: 8px;
+    width: calc(100% - 25%);
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 1px;
+
     :focus {
       border: 2px solid #ffb6b6;
       margin: 0px;

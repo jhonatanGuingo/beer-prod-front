@@ -3,6 +3,7 @@ import HeaderLogged from "../components/HeaderLogged";
 import Recipes from "../components/Recipes";
 import { useState } from "react";
 import NewRecipeModal from "../components/Modals/RecipesModal/NewRecipeModal";
+import { BrewerySideBar } from "../components/BrewerySideBar";
 
 export default function RecipesPage() {
   const [open, setOpen] = useState(false);
@@ -13,10 +14,7 @@ export default function RecipesPage() {
       <HeaderLogged />
       <ContainerMain>
         <SideBar>
-          <BrewerieSideBar>
-            <h1>Cervejaria</h1>
-            <h1>São Bartolomeu</h1>
-          </BrewerieSideBar>
+        <BrewerySideBar/>
           <button onClick={handleOpen} >Criar Receita</button>
           <button>Editar Receita</button>
           <button>Excluir Receita</button>
@@ -39,24 +37,7 @@ export default function RecipesPage() {
 const ContainerMain = styled.div`
   display: flex;
 `;
-const BrewerieSideBar = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-    box-sizing: border-box;
-    padding-top: 15px;
-    padding-bottom: 15px;
-  background-color: #214405 ;
-  h1 {
 
-    color: #fff;
-    font-family: Roboto;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-`;
 const RecipesCardContainer = styled.div`
   display: flex;
   align-items: center;
