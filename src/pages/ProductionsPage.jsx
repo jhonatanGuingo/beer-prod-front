@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
 import Productions from "../components/Productions";
+import { BrewerySideBar } from "../components/BrewerySideBar";
 
 export default function ProductionsPage() {
   return (
@@ -8,10 +9,7 @@ export default function ProductionsPage() {
       <HeaderLogged />
       <ContainerMain>
         <SideBar>
-          <ProductionSideBar>
-            <h1>Cervejaria</h1>
-            <h1>São Bartolomeu</h1>
-          </ProductionSideBar>
+          <BrewerySideBar/>
           <button>Começar produção</button>
           <button>Concluir produção</button>
           <button>Excluir produção</button>
@@ -33,24 +31,7 @@ export default function ProductionsPage() {
 const ContainerMain = styled.div`
   display: flex;
 `;
-const ProductionSideBar = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-    box-sizing: border-box;
-    padding-top: 15px;
-    padding-bottom: 15px;
-  background-color: #214405 ;
-  h1 {
 
-    color: #fff;
-    font-family: Roboto;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-`;
 const ProductionCardContainer = styled.div`
   display: flex;
   align-items: center;
