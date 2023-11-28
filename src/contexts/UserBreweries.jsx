@@ -5,9 +5,10 @@ export default UserBreweries;
 
 export function BreweriesProvider({children}) {
     const [breweries, setBreweries] = useState([]);
+    const [valueSelect, setValueSelect] = useState("");
 
     return(
-        <UserBreweries.Provider value={{breweries, setBreweries}}>
+        <UserBreweries.Provider value={{breweries, setBreweries, valueSelect, setValueSelect}}>
             {children}
         </UserBreweries.Provider>
     )

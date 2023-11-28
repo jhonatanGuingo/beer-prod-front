@@ -7,53 +7,59 @@ import { BrewerySideBar } from "../components/BrewerySideBar";
 import RecipesContext from "../contexts/RecipesContext";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
+import UserBreweries from "../contexts/UserBreweries";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function RecipesPage() {
-  const {userData} = useContext(UserContext)
+  const { userData } = useContext(UserContext);
   const token = userData.token;
   const [open, setOpen] = useState(false);
-  const {recipes, setRecipes} = useContext(RecipesContext)
+  const { recipes, setRecipes } = useContext(RecipesContext);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [valueSelect, setValueSelect] = useState("");
+  const { valueSelect, setValueSelect } = useContext(UserBreweries);
 
   useEffect(() => {
-    console.log(valueSelect, 'aaa')
-    if(valueSelect === "default") return setRecipes(null);
+    if (valueSelect === "default") return setRecipes(null);
     const promise = axios.get(`/recipes/brewery/${valueSelect}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+        Authorization: `Bearer ${token}`,
+      },
+    });
     promise.then((res) => {
-     console.log(res.data)
-      setRecipes(res.data)
-     
+      console.log(res.data);
+      setRecipes(res.data);
     });
-    promise.catch((err) => {
-      
-    });
-  
-},[valueSelect])
+    promise.catch((err) => {});
+  }, [valueSelect]);
+
   return (
     <>
       <HeaderLogged />
       <ContainerMain>
         <SideBar>
-        <BrewerySideBar valueSelect = {valueSelect} setValueSelect = {setValueSelect} />
-          <button onClick={handleOpen} >Criar Receita</button>
+          <BrewerySideBar />
+          <button onClick={handleOpen}>Criar Receita</button>
           <button>Editar Receita</button>
           <button>Excluir Receita</button>
         </SideBar>
         <ContainerRecipes>
-          <NewRecipeModal breweryId = {valueSelect} isOpen = {open} onClose={handleClose}/>
+          <NewRecipeModal
+            breweryId={valueSelect}
+            isOpen={open}
+            onClose={handleClose}
+          />
           <h1>Receitas</h1>
-          {recipes != null ? <RecipesCardContainer>
-            {recipes.map(recipe => <Recipes key={recipe.id} recipe = {recipe}/> )}
-          </RecipesCardContainer> : "Selecione uma Cervejaria para ver as receitas"}
-          
+          {recipes != null ? (
+            <RecipesCardContainer>
+              {recipes.map((recipe) => (
+                <Recipes key={recipe.id} recipe={recipe} />
+              ))}
+            </RecipesCardContainer>
+          ) : (
+            "Selecione uma Cervejaria para ver as receitas"
+          )}
         </ContainerRecipes>
       </ContainerMain>
     </>

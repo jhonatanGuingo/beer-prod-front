@@ -25,7 +25,6 @@ export default function InviteUserModal({isOpenInvite, onCloseInvite}) {
       role: func
     }
 
-    console.log(body)
     const promise = axios.post("/brewery/invite", body, {
       headers: {
         Authorization: `Bearer ${token}`
