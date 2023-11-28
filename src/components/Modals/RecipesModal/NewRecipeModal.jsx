@@ -5,7 +5,7 @@ import UserContext from "../../../contexts/UserContext";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
-export default function NewRecipeModal({isOpen, onClose}) {
+export default function NewRecipeModal({breweryId, isOpen, onClose}) {
 
   if(!isOpen) return null;
   const {userData} = useContext(UserContext)
@@ -40,7 +40,7 @@ export default function NewRecipeModal({isOpen, onClose}) {
     e.preventDefault();
 
     const body = {
-      brewery_id: "2cdc9830-2bd3-4eb7-b4d9-fe36c79900fc",
+      brewery_id: breweryId,
       name: nameRecipe,
       steps
     }
@@ -52,11 +52,11 @@ export default function NewRecipeModal({isOpen, onClose}) {
     });
 
     promise.then(res => {
-      console.log(res.data)
+      alert("Receita Criada com sucesso")
     })
 
     promise.catch((err) => {
-        
+        alert("Falha ao criar receita")
     });
   };
 

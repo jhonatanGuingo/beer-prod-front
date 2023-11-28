@@ -7,43 +7,46 @@ import ProductionsPage from "./pages/ProductionsPage";
 import { UserProvider } from "./contexts/UserContext";
 import useToken from "./hooks/useToken";
 import { BreweriesProvider } from "./contexts/UserBreweries";
+import { RecipesProvider } from "./contexts/RecipesContext";
 
 function App() {
   return (
     <>
       <UserProvider>
         <BreweriesProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
+          <RecipesProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<MainPage />} />
 
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route
-                path="/beers"
-                element={
-                  <ProtectedRouterGuard>
-                    <BeersPage />
-                  </ProtectedRouterGuard>
-                }
-              />
-              <Route
-                path="/recipes"
-                element={
-                  <ProtectedRouterGuard>
-                    <RecipesPage />
-                  </ProtectedRouterGuard>
-                }
-              />
-              <Route
-                path="/productions"
-                element={
-                  <ProtectedRouterGuard>
-                    <ProductionsPage />
-                  </ProtectedRouterGuard>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route
+                  path="/beers"
+                  element={
+                    <ProtectedRouterGuard>
+                      <BeersPage />
+                    </ProtectedRouterGuard>
+                  }
+                />
+                <Route
+                  path="/recipes"
+                  element={
+                    <ProtectedRouterGuard>
+                      <RecipesPage />
+                    </ProtectedRouterGuard>
+                  }
+                />
+                <Route
+                  path="/productions"
+                  element={
+                    <ProtectedRouterGuard>
+                      <ProductionsPage />
+                    </ProtectedRouterGuard>
+                  }
+                />
+              </Routes>
+            </BrowserRouter>
+          </RecipesProvider>
         </BreweriesProvider>
       </UserProvider>
     </>

@@ -19,6 +19,7 @@ const BreweriesCard = styled.div`
   height: 200px;
   border-radius: 9px;
   margin-bottom: 15px;
+  margin-right: 15px;
   box-sizing: border-box;
   padding: 15px;
   border: 1px solid #1e1e1e;
