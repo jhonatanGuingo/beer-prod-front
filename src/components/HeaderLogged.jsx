@@ -13,7 +13,7 @@ export default function HeaderLogged() {
   const token = userData.token;
   function handleLogout() {
     localStorage.clear();
-    
+    navigate('/')
 }
 
 

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export default function Recipes() {
+export default function Recipes({recipe}) {
   return (
     <>
       <RecipesCard>
-        <h1>IPA</h1>
+        <h1>{recipe.Name}</h1>
         <h3>Produções Ativas: 1</h3>
       </RecipesCard>
     </>
@@ -16,6 +16,7 @@ const RecipesCard = styled.div`
   height: 150px;
   border-radius: 9px;
   margin-bottom: 15px;
+  margin-right: 15px;
   box-sizing: border-box;
   padding: 15px;
   border: 1px solid #1e1e1e;

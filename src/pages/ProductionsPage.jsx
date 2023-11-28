@@ -2,19 +2,25 @@ import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
 import Productions from "../components/Productions";
 import { BrewerySideBar } from "../components/BrewerySideBar";
+import CreateBatchModal from "../components/Modals/BatchModal/CreateBatchModal";
+import { useState } from "react";
 
 export default function ProductionsPage() {
+  const [openBatch, setOpenBatch] = useState(false);
+  const handleOpenBatch = () => setOpenBatch(true);
+  const handleCloseBatch = () => setOpenBatch(false);
   return (
     <>
       <HeaderLogged />
       <ContainerMain>
         <SideBar>
           <BrewerySideBar/>
-          <button>Começar produção</button>
+          <button onClick={handleOpenBatch}>Começar produção</button>
           <button>Concluir produção</button>
           <button>Excluir produção</button>
         </SideBar>
         <ContainerProduction>
+          <CreateBatchModal isOpenBatch = {openBatch} onCloseBatch={handleCloseBatch} />
           <h1>Produções:</h1>
           <ProductionCardContainer>
             <Productions />
