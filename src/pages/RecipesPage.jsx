@@ -8,10 +8,12 @@ import RecipesContext from "../contexts/RecipesContext";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import UserBreweries from "../contexts/UserBreweries";
+import useBrewery from "../hooks/useBrewery";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function RecipesPage() {
+  const { fetchedBreweries, isLoading, isError } = useBrewery();
   const { userData } = useContext(UserContext);
   const token = userData.token;
   const [open, setOpen] = useState(false);

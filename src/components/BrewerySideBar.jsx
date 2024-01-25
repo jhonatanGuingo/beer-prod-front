@@ -1,12 +1,12 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import UserContext from "../contexts/UserContext";
 import UserBreweries from "../contexts/UserBreweries";
+import useBrewery from "../hooks/useBrewery";
 
 export function BrewerySideBar() {
-  const { breweries, valueSelect, setValueSelect } = useContext(UserBreweries);
-
+  const { fetchedBreweries, isLoading, isError} = useBrewery();
+  const { valueSelect, setValueSelect } = useContext(UserBreweries);
+  
   return (
     <SideBar>
       <h1>Cervejaria: </h1>
@@ -18,7 +18,9 @@ export function BrewerySideBar() {
         <option value="default" selected>
           Selecione
         </option>
-        {breweries.map((brewery) => (
+        {isLoading && <p>Carregando...</p>}
+        {isError && <p>Ocorreu um erro ao buscar as cervejarias.</p>}
+        {fetchedBreweries && fetchedBreweries.map((brewery) => (
           <option key={brewery.id} value={brewery.id}>
             {brewery.name}
           </option>

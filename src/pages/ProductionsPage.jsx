@@ -3,12 +3,27 @@ import HeaderLogged from "../components/HeaderLogged";
 import Productions from "../components/Productions";
 import { BrewerySideBar } from "../components/BrewerySideBar";
 import CreateBatchModal from "../components/Modals/BatchModal/CreateBatchModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserBreweries from "../contexts/UserBreweries";
 
 export default function ProductionsPage() {
   const [openBatch, setOpenBatch] = useState(false);
   const handleOpenBatch = () => setOpenBatch(true);
   const handleCloseBatch = () => setOpenBatch(false);
+  const { valueSelect, setValueSelect } = useContext(UserBreweries);
+  useEffect(() => {
+    if (valueSelect === "default") return setRecipes(null);
+    const promise = axios.get(`/recipes/brewery/${valueSelect}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    promise.then((res) => {
+      console.log(res.data);
+      setRecipes(res.data);
+    });
+    promise.catch((err) => {});
+  }, [valueSelect]);
   return (
     <>
       <HeaderLogged />

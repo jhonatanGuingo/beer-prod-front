@@ -2,17 +2,21 @@ import styled from "styled-components";
 import HeaderLogged from "../components/HeaderLogged";
 import Breweries from "../components/Breweries";
 import Guests from "../components/Guests";
-import { useContext, useEffect, useState } from "react";
+import { useContext,useEffect,useState } from "react";
 import NewBreweriesModal from "../components/Modals/BreweriesModal/NewBreweriesModal";
 import InviteUserModal from "../components/Modals/BreweriesModal/InviteUserModal";
 import UserContext from "../contexts/UserContext";
 import UserBreweries from "../contexts/UserBreweries";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useSWR from "swr";
+import useBrewery from "../hooks/useBrewery";
+
 
 axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 export default function BeersPage() {
+  const { fetchedBreweries, isLoading, isError } = useBrewery();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,26 +27,15 @@ export default function BeersPage() {
   const handleCloseInvite = () => setOpenInvite(false);
 
   const {breweries, setBreweries} = useContext(UserBreweries);
-  const {userData} = useContext(UserContext)
-  const token = userData.token;
+  
 
+  
   useEffect(() => {
-    
-      const promise = axios.get("/brewery", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      promise.then((res) => {
-       
-        setBreweries(res.data)
-       
-      });
-      promise.catch((err) => {
-        
-      });
-    
-  },[breweries])
+    if (fetchedBreweries) {
+      setBreweries(fetchedBreweries);
+    }
+  }, [fetchedBreweries, setBreweries]);
+
   return (
     <>
       <HeaderLogged />
@@ -59,9 +52,10 @@ export default function BeersPage() {
         <InviteUserModal isOpenInvite = {openInvite} onCloseInvite={handleCloseInvite}/>
           <h1>Suas Cervejarias:</h1>
           <BreweriesContainer>
-            {breweries.map(brewery => (<Breweries key={brewery.id} brewery = {brewery} />))}
-            
-          </BreweriesContainer>
+          {isLoading && <p>Carregando...</p>}
+          {isError && <p>Ocorreu um erro ao buscar as cervejarias.</p>}
+        {fetchedBreweries && fetchedBreweries.map(brewery => (<Breweries key={brewery.id} brewery={brewery} />))}
+      </BreweriesContainer>
           <h1>Convites:</h1>
           <BreweriesContainer>
             <Guests />
